@@ -59,7 +59,7 @@ function pushHandler(Object $payload): void
         echo 'alpha ';
         if (isset($payload) && isset($payload->head_commit->message) && strpos($payload->head_commit->message, 'Merge pull') !== false) {
             echo 'Catch!';
-            exec('sh ../deploy.alpha.sh');// file_put_contents('../test.santaplantas.com/json.json', 'Catch!');
+            exec('sh ../deploy.alpha.sh');
         }
         die();
     }
@@ -67,7 +67,15 @@ function pushHandler(Object $payload): void
         echo 'beta ';
         if (isset($payload) && isset($payload->head_commit->message) && strpos($payload->head_commit->message, 'Merge pull') !== false) {
             echo 'Catch!';
-            exec('sh ../deploy.beta.sh');// file_put_contents('../test.santaplantas.com/json.json', 'Catch!');
+            exec('sh ../deploy.beta.sh');
+        }
+        die();
+    }
+    if (isset($payload) && isset($payload->ref) && $payload->ref == 'refs/heads/master') {
+        echo 'beta ';
+        if (isset($payload) && isset($payload->head_commit->message) && strpos($payload->head_commit->message, 'Merge pull') !== false) {
+            echo 'Catch!';
+            exec('sh ../deploy.production.sh');
         }
         die();
     }
